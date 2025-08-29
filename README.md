@@ -67,7 +67,7 @@ import tiktoken
 import torch
 
 # Load the model and tokenizer
-model = AutoModelForCausalLM.from_pretrained("your-username/Gemma3_270M_TinyStories")
+model = AutoModelForCausalLM.from_pretrained("shubhamw11/Gemma3_270M_TinyStories")
 tokenizer = tiktoken.get_encoding("gpt2")
 
 #define the device
@@ -78,5 +78,6 @@ input_text = "Once upon a time, there was a little"
 context = torch.tensor(tokenizer.encode(input_text), dtype=torch.long).unsqueeze(0).to(device)
 response = model.generate(context, max_new_tokens=200, temperature=1.1, top_k=5)
 print(tokenizer.decode(response.squeeze().tolist()))
+
 
 ```
