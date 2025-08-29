@@ -67,7 +67,7 @@ import tiktoken
 import torch
 
 # Load the model and tokenizer
-model = AutoModelForCausalLM.from_pretrained("shubhamw11/Gemma3_270M_TinyStories")
+model = AutoModelForCausalLM.from_pretrained("Shubhamw11/Gemma3_270M_SLM_TinyStories")
 tokenizer = tiktoken.get_encoding("gpt2")
 
 #define the device
@@ -81,3 +81,4 @@ print(tokenizer.decode(response.squeeze().tolist()))
 
 
 ```
+
