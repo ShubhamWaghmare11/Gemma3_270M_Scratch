@@ -49,36 +49,36 @@ This model is based on Google DeepMind's Gemma3 architecture and was built from 
 
 
 
-
-
 ## Requirements
 
 ```bash
-pip install torch transformers tiktoken
+pip install git+https://huggingface.co/Shubhamw11/Gemma-270M-TinyStories
 ```
 
 ## How to use
 
-You can load and use the model with the Hugging Face `transformers` library:
+You can now load and use the model from the `gemma3_tinystories` library:
 
 ```python
-from transformers import AutoModelForCausalLM
+from gemma3_tinystories import HFGemma3Model, Gemma3Config
 import tiktoken
 import torch
 
-# Load the model and tokenizer
-model = AutoModelForCausalLM.from_pretrained("Shubhamw11/Gemma3_270M_SLM_TinyStories")
+config = Gemma3Config.from_pretrained("Shubhamw11/Gemma-270M-TinyStories")
+model = HFGemma3Model.from_pretrained("Shubhamw11/Gemma-270M-TinyStories", config=config).model
 tokenizer = tiktoken.get_encoding("gpt2")
+```
+
+# Generate text
+```python
 
 #define the device
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# Generate text
 input_text = "Once upon a time, there was a little"
 context = torch.tensor(tokenizer.encode(input_text), dtype=torch.long).unsqueeze(0).to(device)
+model.to(device)
 response = model.generate(context, max_new_tokens=200, temperature=1.1, top_k=5)
+
 print(tokenizer.decode(response.squeeze().tolist()))
-
-
 ```
-
